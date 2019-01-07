@@ -1,0 +1,52 @@
+group 'amritaa'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        jcenter()    // Bintray's repository - a fast Maven Central mirror & more
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.4.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter:2.0.4.RELEASE")
+    compile('org.springframework.boot:spring-boot-starter-web:2.0.4.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf:2.0.4.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-security:2.0.4.RELEASE')
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile ("org.projectlombok:lombok:1.18.2")
+    compile ('com.jayway.jsonpath:json-path:2.4.0')
+    compile ('edu.stanford.nlp:stanford-corenlp:3.9.2')
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+bootRun {
+    // support passing -Dsystem.property=value to bootRun task
+    systemProperties = System.properties
+    jvmArgs = ["-Xmx6g"]
+}
